@@ -81,7 +81,15 @@ def bookings(request):
         bus_name_r = request.POST.get('bus_name')
         seats_r = int(request.POST.get('no_seats'))
         try:
-            bus = Bus.objects.get(bus_name=bus_name_r)
+            # Use filter instead of get to handle multiple objects
+            buses = Bus.objects.filter(bus_name=bus_name_r)
+            if not buses.exists():
+                context["error"] = "Bus not found"
+                return render(request, 'a1/findbus.html', context)
+            
+            # Assuming you want to handle the first bus found
+            bus = buses.first()
+            
             if bus.rem >= seats_r:
                 cost = seats_r * bus.price
                 username_r = request.user.username
@@ -108,10 +116,9 @@ def bookings(request):
             else:
                 context["error"] = "Sorry, not enough seats available"
                 return render(request, 'a1/findbus.html', context)
-        except Bus.DoesNotExist:
-            context["error"] = "Bus not found"
+        except Exception as e:
+            context["error"] = str(e)
             return render(request, 'a1/findbus.html', context)
-
     else:
         return render(request, 'a1/findbus.html')
 
