@@ -10,7 +10,7 @@ class Bus(models.Model):
         ('Khammam', 'Khammam'),
         ('Karimnagar', 'Karimnagar'),
         ('Ramagundam', 'Ramagundam'),
-        ('Mahbubnagar', 'Mahbubnagar'),
+        ('Medak', 'Medak'),
         ('Nalgonda', 'Nalgonda'),
         ('Adilabad', 'Adilabad'),
         ('Suryapet', 'Suryapet'),
@@ -56,15 +56,17 @@ class User(models.Model):
 
 class Book(models.Model):
     id = models.BigAutoField(primary_key=True)
-    BOOKED = 'B'
-    CANCELLED = 'C'
+    BOOKED = 'BOOKED'
+    CONFIRMED = 'CONFIRMED'
+    CANCELLED = 'CANCELLED'
 
     TICKET_STATUSES = ((BOOKED, 'Booked'),
-                       (CANCELLED, 'Cancelled'),)
+                       (CONFIRMED, 'Confirmed'),
+                       (CANCELLED, 'Cancelled'))
     email = models.EmailField()
     name = models.CharField(max_length=30)
-    userid =models.DecimalField(decimal_places=0, max_digits=2)
-    busid=models.DecimalField(decimal_places=0, max_digits=2)
+    userid =models.DecimalField(decimal_places=0, max_digits=4)
+    busid=models.DecimalField(decimal_places=0, max_digits=4)
     bus_name = models.CharField(max_length=30)
     source = models.CharField(max_length=30)
     dest = models.CharField(max_length=30)
@@ -72,7 +74,7 @@ class Book(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=6)
     date = models.DateField()
     time = models.CharField(max_length=10)  # Changed to CharField for dd/mm/yyyy format
-    status = models.CharField(choices=TICKET_STATUSES, default=BOOKED, max_length=2)
+    status = models.CharField(choices=TICKET_STATUSES, default=BOOKED, max_length=10)
 
     class Meta:
         verbose_name_plural = "List of Books"
