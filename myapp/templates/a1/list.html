@@ -57,23 +57,24 @@
                   class="form-control rounded-0 bg-dark text-light"
                   id="bus_name"
                   required
+                  onchange="updateAvailableSeats()"
                 >
                   <option value="">Select a bus</option>
                   {% for bus in bus_list %}
-                    <option value="{{ bus.bus_name }}">{{ bus.bus_name }}</option>
+                    <option value="{{ bus.bus_name }}" data-seats="{{ bus.rem }}">{{ bus.bus_name }}</option>
                   {% endfor %}
                 </select>
               </div>
               <div class="mb-3">
-                <label for="no_seats" class="control-label"
-                  >Number of Seat/s</label
-                >
+                <label for="no_seats" class="control-label">Number of Seat/s</label>
                 <input
                   name="no_seats"
                   class="form-control rounded-0 bg-dark text-light"
                   id="no_seats"
                   type="number"
+                  max=""
                 />
+                <small id="available-seats" class="text-light"></small>
               </div>
               {% if error %}
               <div class="alert alert-danger">{{error}}</div>
@@ -93,5 +94,15 @@
     </div>
   </div>
 </div>
+
+<script>
+  function updateAvailableSeats() {
+    const busSelect = document.getElementById('bus_name');
+    const selectedOption = busSelect.options[busSelect.selectedIndex];
+    const availableSeats = selectedOption.getAttribute('data-seats');
+    document.getElementById('no_seats').max = availableSeats;
+    document.getElementById('available-seats').textContent = `Available seats: ${availableSeats}`;
+  }
+</script>
 
 {% endblock %}

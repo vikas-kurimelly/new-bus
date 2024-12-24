@@ -34,7 +34,23 @@
           class="btn-close"
           data-bs-dismiss="modal"
         ></button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm ms-2"
+          onclick="printBookingDetails()"
+        >
+          Print
+        </button>
       </div>
+      <script>
+        function printBookingDetails() {
+          var printContents = document.getElementById('myModal').innerHTML;
+          var originalContents = document.body.innerHTML;
+          document.body.innerHTML = printContents;
+          window.print();
+          document.body.innerHTML = originalContents;
+        }
+      </script>
 
       <div class="modal-body">
         <ul class="list-group list-group-flush bg-dark">
