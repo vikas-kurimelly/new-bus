@@ -193,5 +193,48 @@
       </div>
     </div>
   </div>
+  <div class="row mt-3 justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-10 col-xs-12">
+      <div class="card rounded-0 bg-dark text-light">
+        <div class="card-header">
+          <div class="card-title h3 mb-0">Cancel Bookings</div>
+        </div>
+        <div class="card-body">
+          <div class="container-fluid">
+            <form
+              action="{% url 'cancellings' %}"
+              method="post"
+              id="cancel-form"
+            >
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="bus_id" class="control-label"
+                  >Booking ID (Seats Booked)</label
+                >
+                <select name="bus_id" id="bus_id" class="form-control">
+                  {% for row in book_list %}
+                  <option value="{{ row.id }}">
+                    {{ row.id }} ({{ row.nos }} seats)
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              {% if error %}
+              <div class="alert alert-danger">{{error}}</div>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <button
+            class="btn btn-sm rounded-0 btn-danger w-100 mb-2"
+            form="cancel-form"
+          >
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
