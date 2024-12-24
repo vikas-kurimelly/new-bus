@@ -22,23 +22,88 @@
               <th class="p-1 text-center">DATE</th>
               <th class="p-1 text-center">TIME</th>
               <th class="p-1 text-center">STATUS</th>
+              <th class="p-1 text-center">VIEW TICKET</th>
             </tr>
           </thead>
-
-          {% for row in book_list %}
-          <tr>
-            <td class="px-2 py-1 align-middle text-light">{{row.id}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.name}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.bus_name}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.source}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.dest}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.nos}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.price}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.date}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.time}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.status}}</td>
-          </tr>
-          {% endfor %}
+          <tbody>
+            {% for row in book_list %}
+            <tr>
+              <td class="px-2 py-1 align-middle text-light">{{row.id}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.name}}</td>
+              <td class="px-2 py-1 align-middle text-light">
+                {{row.bus_name}}
+              </td>
+              <td class="px-2 py-1 align-middle text-light">{{row.source}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.dest}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.nos}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.price}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.date}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.time}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.status}}</td>
+              <td class="px-2 py-1 align-middle text-center">
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#ticketModal{{row.id}}"
+                >
+                  <i class="bi bi-ticket-detailed"></i>
+                </button>
+                <div
+                  class="modal fade"
+                  id="ticketModal{{row.id}}"
+                  tabindex="-1"
+                  aria-labelledby="ticketModalLabel{{row.id}}"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-dark text-light">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="ticketModalLabel{{row.id}}">
+                          Booking Details
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Bus name:</b> {{row.bus_name}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Starting point:</b> {{row.source}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Destination point:</b> {{row.dest}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Number of seats:</b> {{row.nos}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Price:</b> {{row.price}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Date:</b> {{row.date}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Time:</b> {{row.time}}
+                          </li>
+                          <li class="list-group-item bg-dark text-light">
+                            <b>Status:</b> {{row.status}}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
       </div>
     </div>
@@ -47,7 +112,7 @@
     <div class="col-lg-5 col-md-7 col-sm-10 col-xs-12">
       <div class="card rounded-0 bg-dark text-light">
         <div class="card-header">
-          <div class="card-title h3 mb-0">Cancel Booking Form</div>
+          <div class="card-title h3 mb-0">Cancel Bookings</div>
         </div>
         <div class="card-body">
           <div class="container-fluid">
@@ -58,13 +123,16 @@
             >
               {% csrf_token %}
               <div class="mb-3">
-                <label for="bus_id" class="control-label">Booking ID</label>
-                <input
-                  name="bus_id"
-                  class="form-control"
-                  type="number"
-                  id="bus_id"
-                />
+                <label for="bus_id" class="control-label"
+                  >Booking ID (Seats Booked)</label
+                >
+                <select name="bus_id" id="bus_id" class="form-control">
+                  {% for row in book_list %}
+                  <option value="{{ row.id }}">
+                    {{ row.id }} ({{ row.nos }} seats)
+                  </option>
+                  {% endfor %}
+                </select>
               </div>
               {% if error %}
               <div class="alert alert-danger">{{error}}</div>
@@ -74,7 +142,7 @@
         </div>
         <div class="card-footer text-center">
           <button
-            class="btn btn-sm rounded-0 btn-danger w-100"
+            class="btn btn-sm rounded-0 btn-danger w-100 mb-2"
             form="cancel-form"
           >
             Cancel Booking
