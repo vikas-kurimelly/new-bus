@@ -25,36 +25,49 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      .navbar-nav .nav-item {
-        margin-right: 20px;
-        /* Adjust the value as needed */
+      .card-body {
+        padding: 2rem;
       }
 
-      .navbar-nav .nav-item:last-child {
-        margin-right: 0;
-        /* Remove margin from the last item */
+      .responsive-image {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Center nav items in collapsed mode */
+      .navbar-collapse {
+        text-align: center;
+      }
+
+      .navbar-nav {
+        flex-direction: column; /* Stack items vertically in collapsed mode */
+      }
+
+      .navbar-nav .nav-item {
+        margin: 5px 0; /* Add spacing between items */
       }
     </style>
   </head>
 
   <body class="bg-secondary">
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+    <!-- Responsive Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}" style="color: white">
+        <a class="navbar-brand" href="{% url 'home' %}">
           <img
             src="static/mysite/images/bus.png"
             alt="Logo"
             height="30"
-            class="d-inline-block align-top"
-            style="margin-right: 10px"
+            class="d-inline-block align-top me-2"
           />
+          Bus Reservation
         </a>
         <button
           class="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavAltMarkup"
-          aria-controls="navbar-nav"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
@@ -62,52 +75,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav me-auto">
-            <a
-              class="nav-item nav-link active"
-              href="{% url 'home' %}"
-              style="color: white"
-              >Home</a
-            >
-
+            <a class="nav-item nav-link active" href="{% url 'home' %}">
+              Home
+            </a>
             {% if not request.user.is_active %}
-            <a
-              class="nav-item nav-link"
-              href="{% url 'signup' %}"
-              style="color: white"
-              >Registration</a
-            >
+            <a class="nav-item nav-link" href="{% url 'signup' %}">
+              Registration
+            </a>
             {% endif %}
           </div>
           {% if request.user.is_active %}
           <div class="navbar-nav">
-            <a
-              class="nav-item nav-link"
-              href="{% url 'signout' %}"
-              style="color: white"
-              >Logout</a
-            >
+            <a class="nav-item nav-link" href="{% url 'signout' %}"> Logout </a>
           </div>
           {% endif %}
         </div>
       </div>
     </nav>
+
+    <!-- Main Content -->
     {% block content %}
     <div class="container py-5">
-      <div class="card bg-gradient bg-dark">
-        <div class="card-body">
-          <h2 class="my-3 text-center text-light">
-            Welcome to Bus Reservation System
-          </h2>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+          <div class="card bg-gradient bg-dark text-light">
+            <div class="card-body text-center">
+              <h2 class="my-3">Welcome to Bus Reservation System</h2>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="text-center mt-4">
-        <img
-          src="static/mysite/images/bus reserve.png"
-          alt="Logo"
-          height="30"
-          class="d-inline-block align-top"
-          style="margin-right: 10px"
-        />
       </div>
     </div>
     {% endblock %}

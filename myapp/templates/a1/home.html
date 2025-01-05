@@ -1,31 +1,38 @@
 {% extends 'a1/base.html' %} {% block content %}
 <div class="container py-5">
+  <!-- Main Card Section -->
   <div class="card bg-gradient bg-dark">
-    <div class="card-body">
-      <h2 class="my-3 text-center text-light">ONLINE BUS RESERVATION PORTAL</h2>
-      <p class="my-3 text-center text-light lead">
+    <div class="card-body text-center">
+      <h2 class="my-3 text-light">ONLINE BUS RESERVATION PORTAL</h2>
+      <p class="my-3 text-light lead">
         Book your travel with ease and convenience!
       </p>
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-md-6 offset-md-3">
-      <div class="d-grid gap-2">
+
+  <!-- Button Section -->
+  <div class="row mt-4 justify-content-center">
+    <div class="col-12 col-md-6">
+      <div class="d-grid gap-3">
         <a href="{% url 'findbus' %}" class="btn btn-primary btn-lg"
           >Find a Bus</a
         >
-        <a href="{% url 'seebookings' %}" class="btn btn-primary btn-lg"
-          >View My Bookings</a
-        >
-        <img
-          src="static/mysite/images/bus.png"
-          alt="Logo"
-          height="300"
-          width="500"
-          class="d-inline-block align-top"
-          style="margin-top: 50px"
-        />
+        <a href="{% url 'seebookings' %}" class="btn btn-primary btn-lg">
+          View My Bookings
+        </a>
       </div>
+    </div>
+  </div>
+
+  <!-- Image Section -->
+  <div class="row mt-4 justify-content-center">
+    <div class="col-12 col-md-8 text-center">
+      <img
+        src="static/mysite/images/bus.png"
+        alt="Bus Logo"
+        class="img-fluid mt-4"
+        style="max-width: 100%; height: auto"
+      />
     </div>
   </div>
 </div>

@@ -1,12 +1,15 @@
 {% extends 'a1/base.html' %} {% block content %}
 <div class="container py-5">
-  <h3>{{msg}}</h3>
+  <!-- Message Display -->
+  <h3 class="text-center mb-4">{{msg}}</h3>
+
+  <!-- List of Scheduled Buses -->
   <div class="card rounded-0 mb-5 bg-dark text-light">
-    <div class="card-header">
-      <div class="card-title h3 mb-0">List of Scheduled Busses</div>
+    <div class="card-header text-center">
+      <div class="card-title h3 mb-0">List of Scheduled Buses</div>
     </div>
     <div class="card-body">
-      <div class="container-fluid">
+      <div class="table-responsive">
         <table class="table table-bordered table-striped text-light">
           <thead>
             <tr class="bg-gradient bg-primary text-light">
@@ -21,72 +24,91 @@
               <th class="p-1 text-center">TIME</th>
             </tr>
           </thead>
-
-          {% for row in bus_list %}
-          <tr>
-            <td class="px-2 py-1 align-middle text-light">{{row.id }}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.bus_name}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.source}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.dest}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.nos}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.rem}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.price}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.date}}</td>
-            <td class="px-2 py-1 align-middle text-light">{{row.time}}</td>
-          </tr>
-          {% endfor %}
+          <tbody>
+            {% for row in bus_list %}
+            <tr>
+              <td class="px-2 py-1 align-middle text-light text-center">
+                {{row.id }}
+              </td>
+              <td class="px-2 py-1 align-middle text-light">
+                {{row.bus_name}}
+              </td>
+              <td class="px-2 py-1 align-middle text-light">{{row.source}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.dest}}</td>
+              <td class="px-2 py-1 align-middle text-light text-center">
+                {{row.nos}}
+              </td>
+              <td class="px-2 py-1 align-middle text-light text-center">
+                {{row.rem}}
+              </td>
+              <td class="px-2 py-1 align-middle text-light text-center">
+                {{row.price}}
+              </td>
+              <td class="px-2 py-1 align-middle text-light">{{row.date}}</td>
+              <td class="px-2 py-1 align-middle text-light">{{row.time}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
       </div>
     </div>
   </div>
+
+  <!-- Booking Form -->
   <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
+    <div class="col-lg-6 col-md-8 col-sm-10 col-12">
       <div class="card rounded-0 bg-dark text-light">
-        <div class="card-header">
+        <div class="card-header text-center">
           <div class="card-title h3 mb-3">Booking Form</div>
         </div>
         <div class="card-body">
-          <div class="container-fluid">
-            <form action="{% url 'bookings' %}" method="post" id="book-form">
-              <h3>Choose bus to book</h3>
-              {% csrf_token %}
-              <div class="mb-3">
-                <label for="bus_name" class="control-label">Select Bus Name</label>
-                <select
-                  name="bus_name"
-                  class="form-control rounded-0 bg-dark text-light"
-                  id="bus_name"
-                  required
-                  onchange="updateAvailableSeats()"
-                >
-                  <option value="">Select a bus</option>
-                  {% for bus in bus_list %}
-                    <option value="{{ bus.bus_name }}" data-seats="{{ bus.rem }}">{{ bus.bus_name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="no_seats" class="control-label">Number of Seat/s</label>
-                <input
-                  name="no_seats"
-                  class="form-control rounded-0 bg-dark text-light"
-                  id="no_seats"
-                  type="number"
-                  max=""
-                />
-                <small id="available-seats" class="text-light"></small>
-              </div>
-              {% if error %}
-              <div class="alert alert-danger">{{error}}</div>
-              {% endif %}
-            </form>
-          </div>
+          <form action="{% url 'bookings' %}" method="post" id="book-form">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="bus_name" class="form-label">Select Bus Name</label>
+              <select
+                name="bus_name"
+                class="form-select rounded-0 bg-dark text-light"
+                id="bus_name"
+                required
+                onchange="updateAvailableSeats()"
+              >
+                <option value="">Select a bus</option>
+                {% for bus in bus_list %}
+                <option value="{{ bus.bus_name }}" data-seats="{{ bus.rem }}">
+                  {{ bus.bus_name }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="no_seats" class="form-label">Number of Seat/s</label>
+              <input
+                name="no_seats"
+                class="form-control rounded-0 bg-dark text-light"
+                id="no_seats"
+                type="number"
+                max="10"
+                <!--
+                Adjust
+                max
+                value
+                or
+                dynamically
+                set
+                if
+                necessary
+                --
+              />
+              <small id="available-seats" class="text-light"></small>
+            </div>
+            {% if error %}
+            <div class="alert alert-danger text-center">{{ error }}</div>
+            {% endif %}
+          </form>
         </div>
         <div class="card-footer text-center">
-          <button
-            class="btn btn-sm rounded-0 btn-primary w-100"
-            form="book-form"
-          >
+          <button class="btn btn-primary rounded-0 w-100" form="book-form">
             Book Now
           </button>
         </div>
@@ -97,12 +119,13 @@
 
 <script>
   function updateAvailableSeats() {
-    const busSelect = document.getElementById('bus_name');
+    const busSelect = document.getElementById("bus_name");
     const selectedOption = busSelect.options[busSelect.selectedIndex];
-    const availableSeats = selectedOption.getAttribute('data-seats');
-    document.getElementById('no_seats').max = availableSeats;
-    document.getElementById('available-seats').textContent = `Available seats: ${availableSeats}`;
+    const availableSeats = selectedOption.getAttribute("data-seats");
+    document.getElementById("no_seats").max = availableSeats;
+    document.getElementById(
+      "available-seats"
+    ).textContent = `Available seats: ${availableSeats}`;
   }
 </script>
-
 {% endblock %}
