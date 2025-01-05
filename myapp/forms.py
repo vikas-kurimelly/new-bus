@@ -1,9 +1,6 @@
 from django import forms
-from django.contrib.auth import (
-    authenticate,
-    get_user_model
-
-)
+from django.contrib.auth import authenticate, get_user_model
+from .models import ContactMessage
 
 User = get_user_model()
 
@@ -50,3 +47,22 @@ class UserRegisterForm(forms.ModelForm):
         if email_qs.exists():
             raise forms.ValidationError("This email has already been registered")
         return super(UserRegisterForm, self).clean(*args, **kwargs)
+
+
+# New ContactMessageForm to handle contact form submissions
+class ContactMessageForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['email', 'issue']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise forms.ValidationError("Email is required")
+        return email
+
+    def clean_issue(self):
+        issue = self.cleaned_data.get('issue')
+        if not issue:
+            raise forms.ValidationError("Please describe your issue")
+        return issue

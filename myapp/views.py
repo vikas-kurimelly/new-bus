@@ -1,16 +1,11 @@
 from datetime import datetime
 from django.contrib import messages
-from django.shortcuts import render
-from decimal import Decimal
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import User, Bus, Book
+from .models import User, Bus, Book, ContactMessage
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from .forms import UserLoginForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
+from .forms import UserLoginForm, UserRegisterForm, ContactMessageForm
 from decimal import Decimal
 
 
@@ -24,11 +19,11 @@ def home(request):
 @login_required(login_url='signin')
 def findbus(request):
     context = {}
-    
+
     # Fetch distinct sources and destinations for dropdown menus
     context['sources'] = Bus.objects.values_list('source', flat=True).distinct()
     context['destinations'] = Bus.objects.values_list('dest', flat=True).distinct()
-    
+
     if request.method == 'POST':
         source_r = request.POST.get('source')
         dest_r = request.POST.get('destination')
@@ -44,7 +39,7 @@ def findbus(request):
             context['error'] = "Source and destination cannot be the same."
             context['data'] = request.POST
             return render(request, 'a1/findbus.html', context)
-        
+
         try:
             # Parse date input
             date_r = datetime.strptime(date_r, "%Y-%m-%d").date()
@@ -52,16 +47,16 @@ def findbus(request):
             context['error'] = "Invalid date format. Please enter a valid date."
             context['data'] = request.POST
             return render(request, 'a1/findbus.html', context)
-        
+
         # Filter buses based on source, destination, and date
         bus_list = Bus.objects.filter(
-            source=source_r, 
-            dest=dest_r, 
-            date__year=date_r.year, 
-            date__month=date_r.month, 
+            source=source_r,
+            dest=dest_r,
+            date__year=date_r.year,
+            date__month=date_r.month,
             date__day=date_r.day
         )
-        
+
         # Render the results page if buses are found
         if bus_list.exists():
             return render(request, 'a1/list.html', {'bus_list': bus_list, 'date': date_r, 'source': source_r, 'destination': dest_r})
@@ -86,10 +81,10 @@ def bookings(request):
             if not buses.exists():
                 context["error"] = "Bus not found"
                 return render(request, 'a1/findbus.html', context)
-            
+
             # Assuming you want to handle the first bus found
             bus = buses.first()
-            
+
             if bus.rem >= seats_r:
                 cost = seats_r * bus.price
                 username_r = request.user.username
@@ -128,14 +123,11 @@ def cancellings(request):
     context = {}
     if request.method == 'POST':
         id_r = request.POST.get('bus_id')
-        #seats_r = int(request.POST.get('no_seats'))
-
         try:
             book = Book.objects.get(id=id_r)
             bus = Bus.objects.get(id=book.busid)
             rem_r = bus.rem + book.nos
             Bus.objects.filter(id=book.busid).update(rem=rem_r)
-            #nos_r = book.nos - seats_r
             Book.objects.filter(id=id_r).update(status='CANCELLED')
             Book.objects.filter(id=id_r).update(nos=0)
             messages.success(request, "Booked Bus has been cancelled successfully.")
@@ -148,7 +140,7 @@ def cancellings(request):
 
 
 @login_required(login_url='signin')
-def seebookings(request,new={}):
+def seebookings(request, new={}):
     context = {}
     id_r = request.user.id
     book_list = Book.objects.filter(userid=id_r)
@@ -184,11 +176,9 @@ def signin(request):
         user = authenticate(request, username=name_r, password=password_r)
         if user:
             login(request, user)
-            # username = request.session['username']
             context["user"] = name_r
             context["id"] = request.user.id
             return render(request, 'a1/success.html', context)
-            # return HttpResponseRedirect('success')
         else:
             context["error"] = "Provide valid credentials"
             return render(request, 'a1/signin.html', context)
@@ -208,3 +198,21 @@ def success(request):
     context = {}
     context['user'] = request.user
     return render(request, 'a1/success.html', context)
+
+    
+def contact(request):
+    context = {}
+    if request.method == 'POST':
+        form = ContactMessageForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the contact message to the database
+            messages.success(request, "Your message has been sent successfully.")
+            return redirect('home')  # Redirect to home after successful submission
+        else:
+            context['form'] = form
+            context['error'] = "There was an error with your submission. Please try again."
+            return render(request, 'a1/contact.html', context)
+    else:
+        form = ContactMessageForm()
+        context['form'] = form
+        return render(request, 'a1/contact.html', context)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.html import format_html
+from django.contrib.auth.models import User
 
 class Bus(models.Model):
     TELANGANA_CITIES = [
@@ -96,3 +97,15 @@ class Book(models.Model):
         return format_html(
             f'<button style="background-color: {color}; color: white; padding: 5px 10px; border: none; border-radius: 5px;">{self.get_status_display()}</button>'
         )
+
+
+class ContactMessage(models.Model):
+    email = models.EmailField()
+    issue = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Contact Messages"
+
+    def __str__(self):
+        return f"{self.email} - {self.issue[:50]}"
