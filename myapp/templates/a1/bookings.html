@@ -8,7 +8,7 @@
       {% csrf_token %}
       <button
         type="button"
-        class="btn btn-info rounded-0 col-lg-4 col-md-5 col-sm-6 col-xs-6"
+        class="btn btn-info rounded-0 col-lg-3 col-md-4 col-sm-5 col-6 my-2"
         data-bs-toggle="modal"
         data-bs-target="#myModal"
       >
@@ -16,7 +16,7 @@
       </button>
       <button
         type="submit"
-        class="btn btn-primary rounded-0 col-lg-4 col-md-5 col-sm-6 col-xs-6"
+        class="btn btn-primary rounded-0 col-lg-3 col-md-4 col-sm-5 col-6 my-2"
       >
         OK
       </button>
@@ -24,15 +24,23 @@
   </div>
 </div>
 
-<div class="fade modal" id="myModal">
-  <div class="modal-dialog rounded-0 modal-dialog-centered">
+<!-- Modal -->
+<div
+  class="fade modal"
+  id="myModal"
+  tabindex="-1"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-sm">
     <div class="modal-content rounded-0 bg-dark text-light">
       <div class="modal-header">
-        <h4 class="modal-title">Booking Details</h4>
+        <h4 class="modal-title" id="myModalLabel">Booking Details</h4>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
+          aria-label="Close"
         ></button>
         <button
           type="button"
@@ -42,9 +50,10 @@
           Print
         </button>
       </div>
+
       <script>
         function printBookingDetails() {
-          var printContents = document.getElementById('myModal').innerHTML;
+          var printContents = document.getElementById("myModal").innerHTML;
           var originalContents = document.body.innerHTML;
           document.body.innerHTML = printContents;
           window.print();

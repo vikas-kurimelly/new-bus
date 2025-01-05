@@ -9,187 +9,199 @@
     </div>
     <div class="card-body">
       <div class="container-fluid">
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr class="bg-gradient bg-primary text-light">
-              <th class="p-1 text-center">BOOKING ID</th>
-              <th class="p-1 text-center">USER NAME</th>
-              <th class="p-1 text-center">BUS NAME</th>
-              <th class="p-1 text-center">SOURCE</th>
-              <th class="p-1 text-center">DESTINATION</th>
-              <th class="p-1 text-center">NUM OF SEATS</th>
-              <th class="p-1 text-center">PRICE</th>
-              <th class="p-1 text-center">DATE</th>
-              <th class="p-1 text-center">TIME</th>
-              <th class="p-1 text-center">STATUS</th>
-              <th class="p-1 text-center">VIEW TICKET</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in book_list %}
-            <tr>
-              <td class="px-2 py-1 align-middle text-light">{{ row.id }}</td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.name }}</td>
-              <td class="px-2 py-1 align-middle text-light">
-                {{ row.bus_name }}
-              </td>
-              <td class="px-2 py-1 align-middle text-light">
-                {{ row.source }}
-              </td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.dest }}</td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.nos }}</td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.price }}</td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.date }}</td>
-              <td class="px-2 py-1 align-middle text-light">{{ row.time }}</td>
-              <td class="px-2 py-1 align-middle text-center">
-                {% if row.status == 'BOOKED' %}
-                <div class="btn btn-warning btn-sm" disabled>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-stopwatch"
-                    viewBox="0 0 16 16"
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="bg-gradient bg-primary text-light">
+                <th class="p-1 text-center">BOOKING ID</th>
+                <th class="p-1 text-center">USER NAME</th>
+                <th class="p-1 text-center">BUS NAME</th>
+                <th class="p-1 text-center">SOURCE</th>
+                <th class="p-1 text-center">DESTINATION</th>
+                <th class="p-1 text-center">NUM OF SEATS</th>
+                <th class="p-1 text-center">PRICE</th>
+                <th class="p-1 text-center">DATE</th>
+                <th class="p-1 text-center">TIME</th>
+                <th class="p-1 text-center">STATUS</th>
+                <th class="p-1 text-center">VIEW TICKET</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in book_list %}
+              <tr>
+                <td class="px-2 py-1 align-middle text-light">{{ row.id }}</td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.name }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.bus_name }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.source }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.dest }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">{{ row.nos }}</td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.price }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.date }}
+                </td>
+                <td class="px-2 py-1 align-middle text-light">
+                  {{ row.time }}
+                </td>
+                <td class="px-2 py-1 align-middle text-center">
+                  {% if row.status == 'BOOKED' %}
+                  <div class="btn btn-warning btn-sm" disabled>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-stopwatch"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z"
+                      />
+                      <path
+                        d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3"
+                      />
+                    </svg>
+                  </div>
+                  {% elif row.status == 'CONFIRMED' %}
+                  <div class="btn btn-success btn-sm" disabled>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-check-circle"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                      />
+                      <path
+                        d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"
+                      />
+                    </svg>
+                  </div>
+                  {% elif row.status == 'CANCELLED' %}
+                  <div class="btn btn-danger btn-sm" disabled>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-x-circle"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+                      />
+                      <path
+                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+                      />
+                    </svg>
+                  </div>
+                  {% else %}
+                  <div class="btn btn-secondary btn-sm" disabled>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-ban"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"
+                      />
+                    </svg>
+                  </div>
+                  {% endif %}
+                </td>
+                <td class="px-2 py-1 align-middle text-center">
+                  <button
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#ticketModal{{ row.id }}"
                   >
-                    <path
-                      d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z"
-                    />
-                    <path
-                      d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3"
-                    />
-                  </svg>
-                </div>
-                {% elif row.status == 'CONFIRMED' %}
-                <div class="btn btn-success btn-sm" disabled>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-check-circle"
-                    viewBox="0 0 16 16"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 576 512"
+                      style="width: 30px"
+                    >
+                      <!-- Font Awesome Icon -->
+                      <path
+                        d="M64 64C28.7 64 0 92.7 0 128l0 64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320l0 64c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-64c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6l0-64c0-35.3-28.7-64-64-64L64 64zm64 112l0 160c0 8.8 7.2 16 16 16l288 0c8.8 0 16-7.2 16-16l0-160c0-8.8-7.2-16-16-16l-288 0c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32l320 0c17.7 0 32 14.3 32 32l0 192c0 17.7-14.3 32-32 32l-320 0c-17.7 0-32-14.3-32-32l0-192z"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="modal fade"
+                    id="ticketModal{{ row.id }}"
+                    tabindex="-1"
+                    aria-labelledby="ticketModalLabel{{ row.id }}"
+                    aria-hidden="true"
                   >
-                    <path
-                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                    />
-                    <path
-                      d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"
-                    />
-                  </svg>
-                </div>
-                {% elif row.status == 'CANCELLED' %}
-                <div class="btn btn-danger btn-sm" disabled>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-x-circle"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
-                    />
-                    <path
-                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
-                    />
-                  </svg>
-                </div>
-                {% else %}
-                <div class="btn btn-secondary btn-sm" disabled>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-ban"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"
-                    />
-                  </svg>
-                </div>
-                {% endif %}
-              </td>
-              <td class="px-2 py-1 align-middle text-center">
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ticketModal{{ row.id }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 576 512"
-                    style="width: 30px"
-                  >
-                    <!-- Font Awesome Icon -->
-                    <path
-                      d="M64 64C28.7 64 0 92.7 0 128l0 64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320l0 64c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-64c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4c8.3-2.9 15.7-9.8 15.7-18.6l0-64c0-35.3-28.7-64-64-64L64 64zm64 112l0 160c0 8.8 7.2 16 16 16l288 0c8.8 0 16-7.2 16-16l0-160c0-8.8-7.2-16-16-16l-288 0c-8.8 0-16 7.2-16 16zM96 160c0-17.7 14.3-32 32-32l320 0c17.7 0 32 14.3 32 32l0 192c0 17.7-14.3 32-32 32l-320 0c-17.7 0-32-14.3-32-32l0-192z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  class="modal fade"
-                  id="ticketModal{{ row.id }}"
-                  tabindex="-1"
-                  aria-labelledby="ticketModalLabel{{ row.id }}"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content bg-dark text-light">
-                      <div class="modal-header">
-                        <h5
-                          class="modal-title"
-                          id="ticketModalLabel{{ row.id }}"
-                        >
-                          Booking Details
-                        </h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Bus name:</b> {{ row.bus_name }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Starting point:</b> {{ row.source }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Destination point:</b> {{ row.dest }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Number of seats:</b> {{ row.nos }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Price:</b> {{ row.price }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Date:</b> {{ row.date }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Time:</b> {{ row.time }}
-                          </li>
-                          <li class="list-group-item bg-dark text-light">
-                            <b>Status:</b> {{ row.status }}
-                          </li>
-                        </ul>
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content bg-dark text-light">
+                        <div class="modal-header">
+                          <h5
+                            class="modal-title"
+                            id="ticketModalLabel{{ row.id }}"
+                          >
+                            Booking Details
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Bus name:</b> {{ row.bus_name }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Starting point:</b> {{ row.source }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Destination point:</b> {{ row.dest }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Number of seats:</b> {{ row.nos }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Price:</b> {{ row.price }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Date:</b> {{ row.date }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Time:</b> {{ row.time }}
+                            </li>
+                            <li class="list-group-item bg-dark text-light">
+                              <b>Status:</b> {{ row.status }}
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
