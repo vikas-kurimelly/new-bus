@@ -13,11 +13,11 @@ class Bus(models.Model):
         ('Medak', 'Medak'),
         ('Nalgonda', 'Nalgonda'),
         ('Adilabad', 'Adilabad'),
-        ('Suryapet', 'Suryapet'),
+        ('Sircilla', 'Sircilla'),
     ]
 
     id = models.BigAutoField(primary_key=True)
-    BUS_NUMBERS = [(f'TG 76Z {str(i).zfill(4)}{" Express" if i in range(1, 6) else " Deluxe" if i in range(6, 11) else " Super Luxury" if i in range(11, 16) else " EV Bus" if i in range(15, 21) else ""}', f'TG 76Z {str(i).zfill(4)}{" Express" if i in range(1, 6) else " Deluxe" if i in range(6, 11) else " Super Luxury" if i in range(11, 16) else " EV Bus" if i in range(15, 21) else ""}') for i in range(1, 21)]
+    BUS_NUMBERS = [(f'TG 76Z {str(i).zfill(4)}{" Express" if i in range(1, 11) else " Deluxe" if i in range(11, 21) else " Super Luxury" if i in range(21, 31) else " EV Bus" if i in range(31, 41) else ""}', f'TG 76Z {str(i).zfill(4)}{" Express" if i in range(1, 11) else " Deluxe" if i in range(11, 21) else " Super Luxury" if i in range(21, 31) else " EV Bus" if i in range(31, 41) else ""}') for i in range(1, 41)]; express_buses = [bus for bus in BUS_NUMBERS if "Express" in bus[0]][:10]; deluxe_buses = [bus for bus in BUS_NUMBERS if "Deluxe" in bus[0]][:10]; super_luxury_buses = [bus for bus in BUS_NUMBERS if "Super Luxury" in bus[0]][:10]; ev_buses = [bus for bus in BUS_NUMBERS if "EV Bus" in bus[0]][:10]; all_buses = express_buses + deluxe_buses + super_luxury_buses + ev_buses
     bus_name = models.CharField(max_length=30, choices=BUS_NUMBERS)
     source = models.CharField(max_length=30, choices=TELANGANA_CITIES)
     dest = models.CharField(max_length=30, choices=TELANGANA_CITIES)
