@@ -50,15 +50,6 @@
           Print
         </button>
       </div>
-      <script>
-        function printBookingDetails() {
-          var printContents = document.getElementById("myModal").innerHTML;
-          var originalContents = document.body.innerHTML;
-          document.body.innerHTML = printContents;
-          window.print();
-          document.body.innerHTML = originalContents;
-        }
-      </script>
 
       <div class="modal-body">
         <ul class="list-group list-group-flush bg-dark">
@@ -117,5 +108,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  function printBookingDetails() {
+    var printContents = document.getElementById("myModal").innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    // Create a new window for printing
+    var printWindow = window.open("", "", "height=600,width=800");
+    printWindow.document.write(
+      "<html><head><title>Booking Details</title><style>body{font-family: Arial, sans-serif;}</style></head><body>"
+    );
+    printWindow.document.write(printContents);
+    printWindow.document.write("</body></html>");
+    printWindow.document.close(); // necessary for IE >= 10
+
+    // Wait until the new window is fully loaded before printing
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
+  }
+</script>
 
 {% endblock %}
