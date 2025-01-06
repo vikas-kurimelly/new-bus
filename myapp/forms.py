@@ -47,8 +47,8 @@ class UserRegisterForm(forms.ModelForm):
         if email_qs.exists():
             raise forms.ValidationError("This email has already been registered")
         return super(UserRegisterForm, self).clean(*args, **kwargs)
-
-
+    
+      
 # New ContactMessageForm to handle contact form submissions
 class ContactMessageForm(forms.ModelForm):
     class Meta:

@@ -1,42 +1,57 @@
-<!-- contact.html -->
 {% extends 'a1/base.html' %} {% block content %}
-<div class="container py-5 bg-dark my-5">
-  <h1 class="text-light">Contact Us</h1>
-  {% if error %}
-  <div class="alert alert-danger">{{ error }}</div>
-  {% endif %} {% if form.errors %}
-  <div class="alert alert-danger">
-    <ul>
-      {% for field in form %} {% for error in field.errors %}
-      <li>{{ error }}</li>
-      {% endfor %} {% endfor %}
-    </ul>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card bg-gradient bg-dark text-light">
+        <div class="card-body">
+          <h1 class="text-center my-3">Contact Us</h1>
+          {% if error %}
+          <div class="alert alert-danger text-center">{{ error }}</div>
+          {% endif %} {% if form.errors %}
+          <div class="alert alert-danger">
+            <ul>
+              {% for field in form %} {% for error in field.errors %}
+              <li>{{ error }}</li>
+              {% endfor %} {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          <form id="contactForm" method="POST" class="row g-3">
+            {% csrf_token %}
+            <!-- Email Field -->
+            <div class="col-6">
+              <label for="email" class="form-label text-light">Email:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <!-- Message Field -->
+            <div class="col-12">
+              <label for="issue" class="form-label text-light">Message:</label>
+              <textarea
+                class="form-control"
+                id="issue"
+                name="issue"
+                rows="3"
+                placeholder="Write your message here..."
+                required
+              ></textarea>
+            </div>
+            <!-- Submit Button -->
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary rounded-0 w-100">
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  {% endif %}
-  <form id="contactForm" method="POST" class="row g-3">
-    {% csrf_token %}
-    <div class="col-md-6">
-      <label for="email" class="form-label text-light">Email:</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        required
-      />
-    </div>
-    <div class="col-12">
-      <label for="issue" class="form-label text-light">Message:</label>
-      <textarea
-        class="form-control"
-        id="issue"
-        name="issue"
-        required
-      ></textarea>
-    </div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">Send</button>
-    </div>
-  </form>
 </div>
 {% endblock %}
