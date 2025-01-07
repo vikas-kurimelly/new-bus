@@ -1,0 +1,16 @@
+COMMANDS:
+
+http://192.168.0.211:8000
+python manage.py runserver 0.0.0.0:8000
+python manage.py runserver
+python manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+python manage.py shell
+python manage.py startapp <app_name>
+python manage.py collectstatic
+python manage.py runserver 0.0.0.0:8000
+http://192.168.0.211:8000
+django-admin startproject <project_name>
